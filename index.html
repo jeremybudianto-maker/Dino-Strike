@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DINOSTRIKE v6</title>
+<title>DINOSTRIKE v7</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Share+Tech+Mono&display=swap');
 
@@ -428,6 +428,102 @@ body::after {
 .tut-dot { width:6px;height:6px;border:1px solid var(--border);background:transparent; }
 .tut-dot.active { background:var(--accent);border-color:var(--accent); }
 .tut-icon { font-size:28px;text-align:center;margin-bottom:10px; }
+
+/* ─── MUSIC CONTROL ─── */
+#music-btn {
+  position:fixed; bottom:14px; right:14px; z-index:200;
+  background:var(--panel); border:1px solid var(--border);
+  color:var(--text-dim); font-size:16px; width:36px; height:36px;
+  cursor:pointer; display:flex; align-items:center; justify-content:center;
+  transition:all 0.15s; border-radius:0;
+  clip-path: polygon(4px 0%, 100% 0%, calc(100% - 4px) 100%, 0% 100%);
+}
+#music-btn:hover { border-color:var(--accent); color:var(--accent); }
+#music-btn.playing { border-color:var(--accent); color:var(--accent); animation: music-pulse 1.5s infinite ease-in-out; }
+@keyframes music-pulse { 0%,100%{box-shadow:0 0 4px rgba(0,255,136,0.2)} 50%{box-shadow:0 0 12px rgba(0,255,136,0.5)} }
+
+/* ─── INTERACTIVE TUTORIAL ─── */
+.itut-overlay {
+  display:none; position:fixed; top:0; left:0; right:0; bottom:0;
+  background:rgba(10,10,15,0.97); z-index:40; overflow-y:auto; padding:12px;
+  flex-direction:column; align-items:center; gap:10px;
+}
+.itut-overlay.show { display:flex; }
+.itut-header {
+  width:100%; max-width:480px; text-align:center;
+  font-family:'Press Start 2P',monospace; font-size:9px; color:var(--accent);
+  padding-bottom:8px; border-bottom:1px solid var(--border);
+}
+.itut-coach {
+  background:rgba(0,255,136,0.06); border:1px solid var(--accent);
+  border-left:3px solid var(--accent); padding:10px 14px; max-width:480px; width:100%;
+  font-size:12px; line-height:1.8; color:var(--text); position:relative;
+}
+.itut-coach::before {
+  content:'🦕 COACH';
+  font-family:'Press Start 2P',monospace; font-size:6px; color:var(--accent);
+  display:block; margin-bottom:6px;
+}
+.itut-coach b { color:var(--accent3); }
+.itut-coach .highlight { color:var(--accent); }
+.itut-coach .warn { color:var(--accent2); }
+.itut-hint-box {
+  background:rgba(255,204,0,0.06); border:1px solid var(--accent3);
+  padding:8px 12px; max-width:480px; width:100%;
+  font-family:'Press Start 2P',monospace; font-size:7px; color:var(--accent3);
+  text-align:center; animation: hint-blink 1.5s infinite ease-in-out;
+}
+@keyframes hint-blink { 0%,100%{opacity:1} 50%{opacity:0.6} }
+.itut-battlefield {
+  max-width:480px; width:100%;
+  display: flex; gap: 6px; align-items: flex-end;
+  border: 1px solid var(--border);
+  background: linear-gradient(180deg, #08080f 0%, #0d0d18 60%, #111118 100%);
+  padding: 8px 6px 6px; position: relative; overflow: hidden; min-height: 130px;
+}
+.itut-turn-bar {
+  max-width:480px; width:100%;
+  display: flex; gap: 4px; align-items: center;
+  background: var(--panel); border: 1px solid var(--border);
+  padding: 6px 8px; overflow-x: auto; flex-shrink: 0;
+}
+.itut-phase { max-width:480px; width:100%; }
+.itut-skillarea { max-width:480px; width:100%; }
+.itut-log {
+  max-width:480px; width:100%;
+  border:1px solid var(--border);padding:8px 10px;
+  min-height:45px;font-size:11px;line-height:1.6;
+  background:var(--panel);font-family:'Share Tech Mono',monospace;
+}
+.itut-skip {
+  max-width:480px; width:100%; text-align:right;
+  font-size:10px; color:var(--text-dim); cursor:pointer;
+  padding:4px 0;
+}
+.itut-skip:hover { color:var(--accent2); }
+.itut-progress {
+  max-width:480px; width:100%; display:flex; gap:4px; align-items:center;
+  font-family:'Press Start 2P',monospace; font-size:6px; color:var(--text-dim);
+}
+.itut-prog-bar { flex:1; height:3px; background:var(--border); }
+.itut-prog-fill { height:100%; background:var(--accent); transition:width 0.4s; }
+
+/* ─── SURVIVAL MODE ─── */
+.survival-hud {
+  display:flex; gap:8px; align-items:center; justify-content:space-between;
+  background:var(--panel); border:1px solid var(--border); padding:6px 10px;
+  font-family:'Press Start 2P',monospace; font-size:8px;
+}
+.surv-wave { color:var(--accent3); }
+.surv-score { color:var(--accent); }
+.surv-streak { color:var(--accent2); }
+
+/* ─── STATUS EFFECT GLOSSARY ─── */
+.status-glossary { display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-top:8px; }
+.sg-item { background:var(--panel); border:1px solid var(--border); padding:8px; }
+.sg-icon { font-size:16px; display:block; margin-bottom:4px; }
+.sg-name { font-family:'Press Start 2P',monospace; font-size:7px; display:block; margin-bottom:4px; }
+.sg-desc { font-size:10px; color:var(--text-dim); line-height:1.5; }
 </style>
 </head>
 <body>
@@ -437,7 +533,7 @@ body::after {
   <div class="title-logo">
     <div style="font-family:'Press Start 2P',monospace;font-size:40px;color:var(--accent);text-shadow:0 0 30px var(--accent),0 0 80px rgba(0,255,136,0.2);margin-bottom:8px;">🦖</div>
     <h1 class="px" style="font-size:22px;color:var(--accent);text-shadow:0 0 20px var(--accent);letter-spacing:4px;">DINOSTRIKE</h1>
-    <div style="font-family:'Press Start 2P',monospace;font-size:8px;color:var(--text-dim);letter-spacing:5px;margin-top:8px;">v6.0 — TRUE 3v3</div>
+    <div style="font-family:'Press Start 2P',monospace;font-size:8px;color:var(--text-dim);letter-spacing:5px;margin-top:8px;">v7.0 — TRUE 3v3</div>
   </div>
   <div class="mode-grid">
     <div class="mode-card" onclick="nav('party');buildPartyScreen();">
@@ -445,15 +541,15 @@ body::after {
       <span class="mc-label">3v3 BATTLE</span>
       <span class="mc-sub">SPD Order · Target · Synergy</span>
     </div>
-    <div class="mode-card locked">
-      <span class="mc-icon">🦕</span>
+    <div class="mode-card" onclick="startSurvivalMode();">
+      <span class="mc-icon">🌋</span>
       <span class="mc-label">SURVIVAL</span>
-      <span class="mc-sub">Coming soon</span>
+      <span class="mc-sub">Endless waves · ELO pending</span>
     </div>
-    <div class="mode-card" onclick="showTutorial();">
-      <span class="mc-icon">📖</span>
-      <span class="mc-label">HOW TO PLAY</span>
-      <span class="mc-sub">v6 Tutorial</span>
+    <div class="mode-card" onclick="startInteractiveTutorial();">
+      <span class="mc-icon">🎓</span>
+      <span class="mc-label">TUTORIAL</span>
+      <span class="mc-sub">Live 1v1 · Learn by playing</span>
     </div>
     <div class="mode-card locked">
       <span class="mc-icon">🏆</span>
@@ -463,6 +559,60 @@ body::after {
   </div>
   <div style="font-size:10px;color:var(--text-dim);text-align:center;margin-top:6px;">TRUE 3v3 · SPD ORDER · TARGET SELECTION</div>
 </div>
+
+<!-- ════ INTERACTIVE TUTORIAL OVERLAY ════ -->
+<div class="itut-overlay" id="itut-overlay">
+  <div class="itut-header">🎓 INTERACTIVE TUTORIAL — 1v1 TRAINING BATTLE</div>
+  <div class="itut-progress">
+    <span id="itut-step-label">STEP 1 / 7</span>
+    <div class="itut-prog-bar"><div class="itut-prog-fill" id="itut-prog-fill" style="width:14%"></div></div>
+  </div>
+  <div class="itut-coach" id="itut-coach">Welcome, trainer!</div>
+  <div class="itut-hint-box" id="itut-hint" style="display:none">⬆ TAP ABOVE TO CONTINUE</div>
+  <div class="itut-turn-bar" id="itut-turn-bar"></div>
+  <div class="itut-battlefield" id="itut-battlefield">
+    <div id="itut-proj-layer" style="position:absolute;top:0;left:0;right:0;bottom:0;pointer-events:none;overflow:hidden;"></div>
+    <div id="itut-particle-layer" style="position:absolute;top:0;left:0;right:0;bottom:0;pointer-events:none;overflow:hidden;z-index:5;"></div>
+    <div class="field-side" id="itut-field-player"></div>
+    <div class="field-divider"></div>
+    <div class="field-side" id="itut-field-enemy"></div>
+  </div>
+  <div class="phase-bar" id="itut-phase-bar">—</div>
+  <div class="itut-log" id="itut-log"></div>
+  <div class="itut-skillarea" id="itut-skillarea"></div>
+  <div class="itut-skip" onclick="skipTutorial()">✕ Skip tutorial</div>
+</div>
+
+<!-- ════ SURVIVAL SCREEN ════ -->
+<div class="screen" id="survival-screen">
+  <div class="survival-hud">
+    <span class="surv-wave">🌋 WAVE <span id="surv-wave-num">1</span></span>
+    <span class="surv-score">★ <span id="surv-score">0</span> PTS</span>
+    <span class="surv-streak">🔥 STREAK <span id="surv-streak">0</span></span>
+  </div>
+  <div style="font-family:'Press Start 2P',monospace;font-size:7px;color:var(--text-dim);padding:6px 0;border-bottom:1px solid var(--border);">PICK YOUR DINO — BUILD CHANGES EACH WAVE</div>
+  <div class="section-label">CHOOSE YOUR FIGHTER</div>
+  <div class="dino-picker" id="surv-dino-picker"></div>
+  <div id="surv-equip-section" style="display:none;">
+    <div class="section-label">QUICK GEAR</div>
+    <div class="equip-visual-grid" id="surv-equip-grid"></div>
+  </div>
+  <button class="btn" id="surv-start-btn" onclick="launchSurvivalBattle()" disabled>▶ FIGHT WAVE</button>
+  <button class="btn" onclick="nav('title')" style="border-color:var(--border);color:var(--text-dim);">← BACK</button>
+</div>
+
+<!-- ════ SURVIVAL RESULT ════ -->
+<div class="overlay" id="surv-overlay">
+  <div class="result-box" id="surv-result-box">
+    <div class="px" id="surv-res-title" style="font-size:14px;margin-bottom:12px;">WAVE CLEAR!</div>
+    <div id="surv-res-desc" style="font-size:12px;margin-bottom:20px;line-height:1.6;color:var(--text);"></div>
+    <button class="btn" id="surv-next-btn" onclick="nextSurvivalWave()" style="margin-bottom:8px;">▶ NEXT WAVE</button>
+    <button class="btn" onclick="nav('title');closeSurvivalOverlay();" style="border-color:var(--border);color:var(--text-dim);">↩ MENU</button>
+  </div>
+</div>
+
+<!-- Music button (always visible) -->
+<button id="music-btn" onclick="toggleMusic()" title="Toggle music">♪</button>
 
 <!-- ════ PARTY BUILDER ════ -->
 <div class="screen" id="party-screen">
@@ -485,8 +635,6 @@ body::after {
   <button class="btn" id="party-start-btn" onclick="startV6Battle()" disabled>▶ ENTER BATTLE</button>
   <button class="btn" onclick="nav('title')" style="border-color:var(--border);color:var(--text-dim);">← BACK</button>
 </div>
-
-<!-- ════ BATTLE v6 ════ -->
 <div class="screen" id="battle-screen">
   <!-- Turn order bar -->
   <div class="turn-order-bar" id="turn-order-bar">
@@ -521,8 +669,7 @@ body::after {
   </div>
 </div>
 
-<!-- GEAR TOOLTIP -->
-<div class="gear-tooltip" id="gear-tooltip">
+<!-- GEAR TOOLTIP --><div class="gear-tooltip" id="gear-tooltip">
   <div class="gt-title" id="gt-name">—</div>
   <div class="gt-section">
     <div class="gt-label atk">⚔ ATK SKILL</div>
@@ -536,66 +683,6 @@ body::after {
   </div>
 </div>
 
-<!-- TUTORIAL OVERLAY -->
-<div class="tutorial-overlay" id="tutorial-overlay">
-  <div class="tutorial-box">
-    <div class="tut-step active" id="tut-0">
-      <div class="tut-icon">🦖</div>
-      <div class="tut-title">DINOSTRIKE v6 — TRUE 3v3</div>
-      <div class="tut-body">
-        Build a team of <b>3 dinosaurs</b>, each equipped with 4 gear pieces.<br><br>
-        In v6, all 6 dinos (3 per side) act every round in <b>SPD order</b> — fastest first!<br><br>
-        <div class="tut-tip">💡 This is real tactical combat — every dino matters, not just the active one.</div>
-      </div>
-    </div>
-    <div class="tut-step" id="tut-1">
-      <div class="tut-icon">⚡</div>
-      <div class="tut-title">TURN ORDER BAR</div>
-      <div class="tut-body">
-        At the top of battle, you'll see a <b>Turn Order Bar</b> showing all 6 dinos sorted by SPD (highest = acts first).<br><br>
-        The <b>highlighted card</b> is acting right now. Status effects like <b>Stun</b> can skip a dino's turn.<br><br>
-        <div class="tut-tip">💡 Build a fast team to dominate the turn order — speed wins fights!</div>
-      </div>
-    </div>
-    <div class="tut-step" id="tut-2">
-      <div class="tut-icon">🎯</div>
-      <div class="tut-title">ATTACKING & TARGETING</div>
-      <div class="tut-body">
-        When your dino acts, you:<br><br>
-        1. <b>Pick an attack skill</b> from your 4 gear slots.<br>
-        2. <b>Tap an enemy dino</b> to target them — alive enemies glow with ▼ arrows.<br><br>
-        The targeted enemy's AI then picks a defense skill to respond.<br><br>
-        <div class="tut-tip">💡 Focus fire on one target to eliminate threats faster!</div>
-      </div>
-    </div>
-    <div class="tut-step" id="tut-3">
-      <div class="tut-icon">🛡</div>
-      <div class="tut-title">DEFENDING</div>
-      <div class="tut-body">
-        When an enemy dino targets <b>one of your dinos</b>, you pick a <b>defense skill</b> for that specific dino.<br><br>
-        Each dino has its own HP and SP — manage them carefully across the whole round.<br><br>
-        <div class="tut-tip">💡 SP resets to full at the start of each new round for all dinos.</div>
-      </div>
-    </div>
-    <div class="tut-step" id="tut-4">
-      <div class="tut-icon">💀</div>
-      <div class="tut-title">ROLES & WINNING</div>
-      <div class="tut-body">
-        <b style="color:var(--role-tank)">TANK</b> — High HP, blocks damage for the team.<br>
-        <b style="color:var(--role-dmg)">DAMAGE</b> — High ATK output, fast strikers.<br>
-        <b style="color:var(--role-support)">SUPPORT</b> — Heals, buffs, status effects.<br>
-        <b style="color:var(--role-balanced)">BALANCED</b> — Flexible all-rounder.<br><br>
-        Win by <b>knocking out all 3 enemy dinos</b>. A dino at 0 HP is out of the fight permanently!
-      </div>
-    </div>
-    <div class="tut-nav">
-      <button class="btn btn-yellow" id="tut-prev" onclick="tutNav(-1)" style="font-size:7px;padding:8px 10px;">◀ PREV</button>
-      <div class="tut-dots" id="tut-dots"></div>
-      <button class="btn" id="tut-next" onclick="tutNav(1)" style="font-size:7px;padding:8px 10px;">NEXT ▶</button>
-    </div>
-    <button class="btn" onclick="closeTutorial()" style="width:100%;margin-top:10px;border-color:var(--border);color:var(--text-dim);font-size:7px;">✕ CLOSE</button>
-  </div>
-</div>
 
 <script>
 // ══════════════════════════════════════════
@@ -1429,12 +1516,13 @@ function doClash(attacker, atkSkill, defender, defSkill) {
         if(defSkill.dodge) {
           msg += '<span class="log-miss">DODGED!</span>';
           showHitNum(0, defender, 'melee');
+          playBattleSFX('status');
         } else {
           const block = defSkill.block||0;
           finalDmg = Math.max(0, dmg - block);
           defender.hp = Math.max(0, defender.hp - finalDmg);
           if(block>0) msg += `<span class="log-miss">Blocked ${block}.</span> `;
-          if(finalDmg>0){ msg += `<span class="log-dmg">${finalDmg} DMG!</span>`; showHitNum(finalDmg, defender, atkSkill.type); }
+          if(finalDmg>0){ msg += `<span class="log-dmg">${finalDmg} DMG!</span>`; showHitNum(finalDmg, defender, atkSkill.type); playBattleSFX('hit'); }
         }
       }
 
@@ -1442,6 +1530,7 @@ function doClash(attacker, atkSkill, defender, defSkill) {
       if(atkSkill.statusApply && !defSkill.dodge) {
         applyStatus(defender, atkSkill.statusApply);
         msg += ` <span class="log-status">+ ${atkSkill.statusApply.type.toUpperCase()}!</span>`;
+        playBattleSFX('status');
       }
 
       // Shield visual
@@ -1452,6 +1541,7 @@ function doClash(attacker, atkSkill, defender, defSkill) {
         defender.hp = Math.min(defender.maxHp, defender.hp + defSkill.heal);
         msg += ` <span class="log-heal">Healed ${defSkill.heal}!</span>`;
         showHitNum(-defSkill.heal, defender, 'heal');
+        playBattleSFX('heal');
       }
       // Counter
       if(defSkill.dmg) {
@@ -1544,9 +1634,35 @@ function checkBattleEnd() {
   if(enemyAlive === 0 || playerAlive === 0) {
     const win = enemyAlive === 0;
     gs.over = true;
+    playBattleSFX(win ? 'win' : 'lose');
     document.getElementById('skill-area').innerHTML='';
     document.getElementById('phase-bar').textContent = win ? '🏆 VICTORY!' : '💀 DEFEAT!';
     document.getElementById('phase-bar').className = `phase-bar ${win?'':'defend'}`;
+
+    if(gs.isSurvival) {
+      const survBox = document.getElementById('surv-overlay');
+      const survTitle = document.getElementById('surv-res-title');
+      const survDesc = document.getElementById('surv-res-desc');
+      const nextBtn = document.getElementById('surv-next-btn');
+      if(win) {
+        survState.streak++;
+        const pts = 100 * gs.survWave + survState.streak * 50;
+        survState.score += pts;
+        updateSurvivalHUD();
+        survTitle.textContent = `🌋 WAVE ${gs.survWave} CLEAR!`;
+        survTitle.style.color = 'var(--accent)';
+        survDesc.innerHTML = `+${pts} points!<br>Streak: ${survState.streak}x<br>Total Score: ${survState.score}`;
+        nextBtn.style.display = '';
+      } else {
+        survState.streak = 0;
+        survTitle.textContent = '💀 WIPED OUT!';
+        survTitle.style.color = 'var(--accent2)';
+        survDesc.innerHTML = `Fell on wave ${gs.survWave}<br>Final Score: ${survState.score}`;
+        nextBtn.style.display = 'none';
+      }
+      setTimeout(()=>survBox.classList.add('show'), 1200);
+      return true;
+    }
 
     const box = document.getElementById('result-box');
     box.className = 'result-box' + (win?'':' defeat');
@@ -1566,40 +1682,648 @@ function checkBattleEnd() {
 }
 
 // ══════════════════════════════════════════
-// TUTORIAL
+// MUSIC ENGINE (Web Audio API — no copyright)
 // ══════════════════════════════════════════
-const TUT_TOTAL = 5;
-let tutPage = 0;
+let audioCtx = null;
+let musicPlaying = false;
+let musicNodes = [];
+let musicScheduler = null;
 
-function showTutorial(){
-  tutPage=0; renderTutPage();
-  document.getElementById('tutorial-overlay').classList.add('show');
+function initAudio() {
+  if (audioCtx) return;
+  audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 }
-function closeTutorial(){
-  localStorage.setItem('dinostrike_visited','1');
-  document.getElementById('tutorial-overlay').classList.remove('show');
+
+function createNote(freq, startTime, duration, type='square', gain=0.08) {
+  const osc = audioCtx.createOscillator();
+  const gainNode = audioCtx.createGain();
+  osc.connect(gainNode);
+  gainNode.connect(audioCtx.destination);
+  osc.type = type;
+  osc.frequency.setValueAtTime(freq, startTime);
+  gainNode.gain.setValueAtTime(0, startTime);
+  gainNode.gain.linearRampToValueAtTime(gain, startTime + 0.01);
+  gainNode.gain.linearRampToValueAtTime(0, startTime + duration * 0.9);
+  osc.start(startTime);
+  osc.stop(startTime + duration);
+  musicNodes.push(osc);
 }
-function tutNav(dir){
-  tutPage=Math.max(0,Math.min(TUT_TOTAL-1,tutPage+dir));
-  renderTutPage();
-}
-function renderTutPage(){
-  for(let i=0;i<TUT_TOTAL;i++){
-    const s=document.getElementById('tut-'+i);
-    if(s) s.classList.toggle('active',i===tutPage);
+
+// Chiptune battle theme — procedurally generated, royalty-free
+const MELODY = [
+  329.6, 392, 329.6, 261.6, 329.6, 392, 440, 392,
+  329.6, 293.7, 329.6, 261.6, 220, 261.6, 220, 196,
+  261.6, 329.6, 392, 440, 392, 329.6, 293.7, 261.6,
+  220, 246.9, 261.6, 293.7, 329.6, 293.7, 261.6, 246.9
+];
+const BASS = [
+  130.8, 130.8, 196, 130.8, 164.8, 164.8, 220, 164.8
+];
+const NOTE_DUR = 0.14;
+const BEAT = 0.18;
+let melodyIdx = 0, bassIdx = 0, beatCount = 0;
+
+function scheduleMusic() {
+  if (!musicPlaying || !audioCtx) return;
+  const now = audioCtx.currentTime;
+  // Melody
+  const mFreq = MELODY[melodyIdx % MELODY.length];
+  createNote(mFreq, now, NOTE_DUR, 'square', 0.07);
+  // Every 2 beats, bass note
+  if (beatCount % 2 === 0) {
+    const bFreq = BASS[bassIdx % BASS.length];
+    createNote(bFreq, now, NOTE_DUR * 2, 'triangle', 0.05);
+    bassIdx++;
   }
-  document.getElementById('tut-prev').disabled=tutPage===0;
-  document.getElementById('tut-next').disabled=tutPage===TUT_TOTAL-1;
-  const dots=document.getElementById('tut-dots'); dots.innerHTML='';
-  for(let i=0;i<TUT_TOTAL;i++){
-    const d=document.createElement('div'); d.className='tut-dot'+(i===tutPage?' active':'');
-    dots.appendChild(d);
+  // Every 4 beats, percussion (white noise simulation via sawtooth)
+  if (beatCount % 4 === 0) {
+    createNote(80, now, 0.05, 'sawtooth', 0.04);
+  }
+  melodyIdx++;
+  beatCount++;
+  // Keep only last 8 nodes, clean up old ones
+  while (musicNodes.length > 20) musicNodes.shift();
+  musicScheduler = setTimeout(scheduleMusic, BEAT * 1000);
+}
+
+function toggleMusic() {
+  initAudio();
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+  musicPlaying = !musicPlaying;
+  const btn = document.getElementById('music-btn');
+  if (musicPlaying) {
+    btn.textContent = '♫'; btn.classList.add('playing');
+    scheduleMusic();
+  } else {
+    btn.textContent = '♪'; btn.classList.remove('playing');
+    clearTimeout(musicScheduler);
+    musicNodes.forEach(n => { try { n.stop(); } catch(e){} });
+    musicNodes = [];
   }
 }
+
+function playBattleSFX(type) {
+  if (!audioCtx) return;
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+  const now = audioCtx.currentTime;
+  const sfxMap = {
+    hit:    [[220, 'sawtooth', 0.12, 0.08], [110, 'sawtooth', 0.06, 0.06]],
+    heal:   [[523, 'sine', 0.08, 0.12], [659, 'sine', 0.06, 0.10]],
+    status: [[880, 'square', 0.05, 0.06], [440, 'square', 0.05, 0.08]],
+    win:    [[523, 'square', 0.1, 0.2], [659, 'square', 0.1, 0.2], [784, 'square', 0.12, 0.3]],
+    lose:   [[196, 'sawtooth', 0.1, 0.3], [164.8, 'sawtooth', 0.1, 0.2], [130.8, 'sawtooth', 0.08, 0.3]],
+  };
+  const seq = sfxMap[type] || sfxMap.hit;
+  seq.forEach(([freq, waveType, gain, dur], i) => {
+    createNote(freq, now + i * 0.08, dur, waveType, gain);
+  });
+}
+
+// ══════════════════════════════════════════
+// INTERACTIVE TUTORIAL SYSTEM
+// ══════════════════════════════════════════
+const ITUT_STEPS = [
+  {
+    step: 1, total: 7,
+    coach: `Welcome to <b>DINOSTRIKE</b>! I'm your training coach 🦕<br><br>
+            This is a <b>live 1v1 battle</b> where I'll explain everything as it happens.<br>
+            You control <span class="highlight">RAPTOR</span> (green side). I control <span class="highlight">CARNO</span> (red side).<br><br>
+            See the <b>Turn Order Bar</b> above the battlefield? It shows who acts next, sorted by <b>SPD</b> — fastest first!`,
+    hint: '▼ READ ABOVE, THEN LOOK AT THE TURN ORDER BAR',
+    waitForAction: false,
+    action: 'advance'
+  },
+  {
+    step: 2, total: 7,
+    coach: `Now check the <b>battlefield</b>! Your RAPTOR is on the left 🟢, CARNO on the right 🔴.<br><br>
+            See the <b>HP bar</b> under each dino? That's their health — when it hits 0, they're out!<br>
+            The little <b>blue squares</b> (SP pips) = Skill Points. Skills cost SP to use.`,
+    hint: '▼ LOOK AT THE BATTLEFIELD, THEN TAP "NEXT"',
+    waitForAction: false,
+    action: 'advance'
+  },
+  {
+    step: 3, total: 7,
+    coach: `It's <b>YOUR TURN</b>! RAPTOR acts first because it has higher SPD.<br><br>
+            Below you'll see your <b>Attack Skills</b> — each comes from your equipped gear.<br>
+            Try <span class="highlight">Sonic Blast</span> — it's a fast PROJECTILE attack that also gives you a <b>COMBO turn</b>!<br><br>
+            <span class="warn">⚠ Tap a skill to select it, then tap CARNO to fire!</span>`,
+    hint: '▼ TAP AN ATTACK SKILL BELOW',
+    waitForAction: true,
+    action: 'player_atk'
+  },
+  {
+    step: 4, total: 7,
+    coach: `Now <span class="highlight">tap CARNO</span> to fire at it!<br><br>
+            Notice the <b>▼ arrows</b> over the enemy — they mean CARNO is <b>targetable</b>.<br>
+            In 3v3, you choose who to focus fire on — strategy matters!`,
+    hint: '▼ TAP CARNO (THE RED DINO) TO TARGET IT',
+    waitForAction: true,
+    action: 'player_target'
+  },
+  {
+    step: 5, total: 7,
+    coach: `Watch the <b>attack animation</b>! Your dino dashes forward and fires a projectile 💙<br><br>
+            After the hit, check the <b>battle log</b> — it shows damage dealt and any effects.<br>
+            Since you used a COMBO skill, you get <b>another turn right away!</b>`,
+    hint: '▼ WATCH THE ANIMATION PLAY OUT...',
+    waitForAction: false,
+    action: 'watch'
+  },
+  {
+    step: 6, total: 7,
+    coach: `Now it's <b>CARNO's turn</b> to attack YOU! When an enemy attacks, you pick a <b>DEFENSE SKILL</b>.<br><br>
+            <span class="highlight">Iron Shell</span> = BLOCK damage (absorb some hits) 🛡<br>
+            <span class="highlight">Phase Dodge</span> = DODGE completely — but costs more SP!<br>
+            <span class="highlight">Regenerate</span> = Heal yourself while blocking 💚<br><br>
+            <span class="warn">Pick a defense skill below to protect your RAPTOR!</span>`,
+    hint: '▼ PICK A DEFENSE SKILL TO PROTECT YOUR DINO',
+    waitForAction: true,
+    action: 'player_def'
+  },
+  {
+    step: 7, total: 7,
+    coach: `<b>Status Effects</b> — the most important mechanic to master! 🔥<br><br>
+            <div class="status-glossary">
+              <div class="sg-item"><span class="sg-icon">☠</span><span class="sg-name" style="color:var(--poison)">POISON</span><span class="sg-desc">-2 HP at end of each round. Stacks multiple times!</span></div>
+              <div class="sg-item"><span class="sg-icon">🔥</span><span class="sg-name" style="color:var(--burn)">BURN</span><span class="sg-desc">-3 HP at round end. Stronger than poison!</span></div>
+              <div class="sg-item"><span class="sg-icon">⚡</span><span class="sg-name" style="color:var(--stun)">STUN</span><span class="sg-desc">Skips that dino's ENTIRE next turn. Game-changing!</span></div>
+              <div class="sg-item"><span class="sg-icon">🛡</span><span class="sg-name" style="color:var(--shield)">SHIELD</span><span class="sg-desc">Absorbs incoming damage for 1 turn.</span></div>
+            </div>
+            <br>You're ready to play for real! Hit the button below to start a full battle!`,
+    hint: '',
+    waitForAction: false,
+    action: 'finish'
+  }
+];
+
+let itutGs = {}; // tutorial game state
+let itutStepIdx = 0;
+let itutWaitingFor = null; // 'atk_select' | 'target_select' | 'def_select' | null
+
+function startInteractiveTutorial() {
+  itutStepIdx = 0;
+  itutWaitingFor = null;
+  // Set up 1v1: Raptor vs Carno, fixed gear
+  const raptorEquip = {
+    head: EQUIPMENT.head[1],  // Sonic Crest (combo proj)
+    torso: EQUIPMENT.torso[1], // Regen Hide
+    legs: EQUIPMENT.legs[0],  // Razor Claws
+    tail: EQUIPMENT.tail[1],  // Plasma Whip
+  };
+  const carnoEquip = {
+    head: EQUIPMENT.head[0],  // Dread Jaws
+    torso: EQUIPMENT.torso[0], // Spike Armor
+    legs: EQUIPMENT.legs[1],  // Titan Boots
+    tail: EQUIPMENT.tail[0],  // Toxin Tail
+  };
+  const raptor = DINOS.find(d=>d.id==='raptor');
+  const carno  = DINOS.find(d=>d.id==='carno');
+  const pFighter = makeFighter(raptor, raptorEquip, true, 0);
+  const eFighter = makeFighter(carno, carnoEquip, false, 0);
+  itutGs = {
+    playerTeam: [pFighter],
+    enemyTeam:  [eFighter],
+    round: 1,
+    over: false,
+    turnOrder: [pFighter, eFighter].sort((a,b)=>b.spd-a.spd),
+    turnIdx: 0,
+    actingFighter: null,
+    pendingAction: null,
+    phase: 'build',
+    busy: false,
+    globalAtkBonus: 0,
+    activeSynergies: []
+  };
+
+  document.getElementById('itut-overlay').classList.add('show');
+  renderItutStep(0);
+}
+
+function renderItutStep(idx) {
+  itutStepIdx = idx;
+  const s = ITUT_STEPS[idx];
+  document.getElementById('itut-step-label').textContent = `STEP ${s.step} / ${s.total}`;
+  document.getElementById('itut-prog-fill').style.width = `${(s.step/s.total)*100}%`;
+  document.getElementById('itut-coach').innerHTML = (s.step === 7 ? '' : '') + s.coach;
+  const hintEl = document.getElementById('itut-hint');
+  if (s.hint) { hintEl.style.display=''; hintEl.textContent = s.hint; }
+  else hintEl.style.display = 'none';
+
+  renderItutBattlefield();
+  renderItutTurnBar();
+
+  const sa = document.getElementById('itut-skillarea');
+  sa.innerHTML = '';
+
+  if (s.action === 'advance' || s.action === 'watch') {
+    const btn = document.createElement('button');
+    btn.className = 'btn';
+    btn.style.cssText = 'width:100%;margin-top:6px;';
+    btn.textContent = s.action === 'watch' ? '▶ PLAY TURN' : '▶ NEXT';
+    btn.onclick = () => {
+      if (s.action === 'watch') {
+        runItutEnemyThenAdvance();
+      } else {
+        advanceItutStep();
+      }
+    };
+    sa.appendChild(btn);
+  } else if (s.action === 'player_atk') {
+    buildItutAttackButtons();
+  } else if (s.action === 'player_target') {
+    buildItutTargetPrompt();
+  } else if (s.action === 'player_def') {
+    buildItutDefenseButtons();
+  } else if (s.action === 'finish') {
+    const btn = document.createElement('button');
+    btn.className = 'btn';
+    btn.style.cssText = 'width:100%;margin-top:6px;';
+    btn.textContent = '🦖 START FULL 3v3 BATTLE!';
+    btn.onclick = () => {
+      skipTutorial();
+      nav('party'); buildPartyScreen();
+    };
+    const btn2 = document.createElement('button');
+    btn2.className = 'btn';
+    btn2.style.cssText = 'width:100%;margin-top:6px;border-color:var(--border);color:var(--text-dim);';
+    btn2.textContent = '↩ BACK TO MENU';
+    btn2.onclick = skipTutorial;
+    sa.appendChild(btn); sa.appendChild(btn2);
+  }
+}
+
+function advanceItutStep() {
+  if (itutStepIdx < ITUT_STEPS.length - 1) {
+    renderItutStep(itutStepIdx + 1);
+  }
+}
+
+function skipTutorial() {
+  localStorage.setItem('dinostrike_visited', '1');
+  document.getElementById('itut-overlay').classList.remove('show');
+}
+
+function itutLog(msg) {
+  const b = document.getElementById('itut-log');
+  b.querySelectorAll('.cur').forEach(x=>x.classList.remove('cur'));
+  const d = document.createElement('div'); d.className='cur'; d.innerHTML = msg;
+  b.appendChild(d);
+  while(b.children.length > 4) b.removeChild(b.firstChild);
+  b.scrollTop = b.scrollHeight;
+}
+
+function renderItutBattlefield() {
+  const pField = document.getElementById('itut-field-player');
+  const eField = document.getElementById('itut-field-enemy');
+  pField.innerHTML = ''; eField.innerHTML = '';
+  itutGs.playerTeam.forEach(f => pField.appendChild(buildFieldUnit(f, false, null)));
+  itutGs.enemyTeam.forEach(f => eField.appendChild(buildFieldUnitItut(f, false, null)));
+}
+
+function buildFieldUnitItut(fighter, targetable, onClick) {
+  // Same as buildFieldUnit but uses itut layers
+  const div = buildFieldUnit(fighter, targetable, onClick);
+  return div;
+}
+
+function renderItutTurnBar() {
+  const bar = document.getElementById('itut-turn-bar');
+  bar.innerHTML = '<div class="tob-label">NEXT→</div>';
+  itutGs.turnOrder.forEach((f, i) => {
+    const card = document.createElement('div');
+    const isActive = itutGs.turnIdx === i;
+    card.className = `tob-card ${f.isPlayer?'player-side':'enemy-side'} ${f.hp<=0?'fainted':''} ${isActive?'active-turn':''}`;
+    const hpPct = Math.max(0, f.hp/f.maxHp*100);
+    card.innerHTML = `<div class="tob-sprite">${DINO_SVGS[f.dinoRef.id]||''}</div>
+      <div class="tob-name">${f.dinoRef.name.slice(0,5)}</div>
+      <div class="tob-hpbar"><div class="tob-hpfill" style="width:${hpPct}%"></div></div>`;
+    bar.appendChild(card);
+  });
+}
+
+function buildItutAttackButtons() {
+  const actor = itutGs.playerTeam[0];
+  const sa = document.getElementById('itut-skillarea');
+  sa.innerHTML = '';
+  const grid = document.createElement('div'); grid.className = 'skill-grid';
+  SLOTS.forEach(slot => {
+    const gear = actor.equip[slot]; if(!gear) return;
+    const atk = gear.atk;
+    const disabled = actor.sp < atk.cost;
+    const btn = document.createElement('button'); btn.className='skill-btn'; btn.disabled=disabled;
+    btn.innerHTML=`<span class="sk-name">${atk.name}${atk.combo?' [+T]':''}</span><span class="sk-desc">${buildSkillDesc(atk)}</span><span class="sk-cost">— ${atk.cost} SP</span><span class="sk-type"><span class="skill-type-badge type-${atk.type}">${atk.type.toUpperCase()}</span></span>`;
+    btn.onclick = () => {
+      if(disabled) return;
+      itutGs.pendingAction = { attacker: actor, atkSkill: atk };
+      // Move to target step
+      renderItutStep(3); // step index 3 = player_target
+    };
+    grid.appendChild(btn);
+  });
+  sa.appendChild(grid);
+}
+
+function buildItutTargetPrompt() {
+  const sa = document.getElementById('itut-skillarea');
+  sa.innerHTML = `<div class="target-prompt">▼ TAP CARNO TO FIRE!</div>`;
+  // Rebuild battlefield with targetable enemy
+  const pField = document.getElementById('itut-field-player');
+  const eField = document.getElementById('itut-field-enemy');
+  pField.innerHTML = ''; eField.innerHTML = '';
+  itutGs.playerTeam.forEach(f => pField.appendChild(buildFieldUnit(f, false, null)));
+  itutGs.enemyTeam.forEach(f => {
+    const unit = buildFieldUnit(f, true, () => {
+      itutFireAttack();
+    });
+    eField.appendChild(unit);
+  });
+}
+
+function itutFireAttack() {
+  const attacker = itutGs.playerTeam[0];
+  const defender = itutGs.enemyTeam[0];
+  const atkSkill = itutGs.pendingAction.atkSkill;
+
+  // Temporarily swap layers for tutorial battlefield
+  const origProj = document.getElementById('projectile-layer');
+  const origParticle = document.getElementById('particle-layer');
+  const origField = document.getElementById('battlefield');
+  // We'll use a workaround: temporarily redirect layer IDs
+  const itutProj = document.getElementById('itut-proj-layer');
+  const itutParticle = document.getElementById('itut-particle-layer');
+  itutProj.id = 'projectile-layer';
+  itutParticle.id = 'particle-layer';
+  const itutBf = document.getElementById('itut-battlefield');
+  itutBf._origId = 'itut-battlefield';
+
+  // Patch getFieldEl temporarily
+  const origGetFieldEl = getFieldEl;
+
+  attacker.sp = Math.max(0, attacker.sp - atkSkill.cost);
+  triggerDash(attacker, defender);
+
+  const projEmoji = atkSkill.proj || '💥';
+  const itutFieldRect = itutBf;
+  // We need to launch projectile in itut context — manually
+  itutLaunchProjectile(projEmoji, attacker, defender, atkSkill.type, () => {
+    // Restore IDs
+    itutProj.id = 'itut-proj-layer';
+    itutParticle.id = 'itut-particle-layer';
+
+    triggerHitShake(defender);
+    playBattleSFX('hit');
+    let dmg = atkSkill.dmg || 0;
+    const defOptions = SLOTS.map(s=>defender.equip[s]?.def).filter(d=>d&&d.cost<=defender.sp);
+    const defSkill = defOptions.length ? defOptions[Math.floor(Math.random()*defOptions.length)] : {name:'Brace',type:'shield',cost:0,block:1};
+    defender.sp = Math.max(0, defender.sp - defSkill.cost);
+    const block = defSkill.block || 0;
+    const finalDmg = Math.max(0, dmg - block);
+    defender.hp = Math.max(0, defender.hp - finalDmg);
+
+    itutLog(`<b style="color:${attacker.color}">${attacker.name}</b> → <b>${atkSkill.name}</b>: <span class="log-dmg">${finalDmg} DMG!</span>${block>0?` (blocked ${block})`:''}${atkSkill.combo?' <span class="log-status">+COMBO TURN!</span>':''}`);
+
+    renderItutBattlefield();
+    renderItutTurnBar();
+    // Check if done; else advance to watch step (5 = index 4)
+    if(defender.hp <= 0) {
+      itutLog(`<b style="color:var(--accent)">CARNO FAINTED!</b> Tutorial complete — you got it!`);
+      renderItutStep(6); // jump to status/finish step
+    } else {
+      renderItutStep(4); // watch step, then def
+    }
+  });
+}
+
+function itutLaunchProjectile(emoji, fromFighter, toFighter, type, onHit) {
+  const layer = document.getElementById('itut-proj-layer');
+  const field  = document.getElementById('itut-battlefield');
+  const fromEl = document.getElementById('fu-' + fromFighter.uid);
+  const toEl   = document.getElementById('fu-' + toFighter.uid);
+  if (!fromEl || !toEl || !layer) { if(onHit) onHit(); return; }
+
+  const fieldRect = field.getBoundingClientRect();
+  const fromRect  = fromEl.getBoundingClientRect();
+  const toRect    = toEl.getBoundingClientRect();
+  const startX = fromRect.left - fieldRect.left + fromRect.width/2;
+  const endX   = toRect.left   - fieldRect.left + toRect.width/2;
+  const startY = fromRect.top  - fieldRect.top  + fromRect.height/2;
+  const endY   = toRect.top    - fieldRect.top  + toRect.height/2;
+
+  const proj = document.createElement('div');
+  proj.className = 'projectile';
+  proj.textContent = emoji;
+  proj.style.left = startX + 'px';
+  proj.style.top  = startY + 'px';
+  layer.appendChild(proj);
+
+  let start = null;
+  const dur = 280;
+  function step(ts) {
+    if(!start) start = ts;
+    const p = Math.min((ts-start)/dur, 1);
+    const e = p<0.5?2*p*p:-1+(4-2*p)*p;
+    const x = startX + (endX-startX)*e;
+    const arc = Math.sin(p*Math.PI)*-30;
+    const y = startY + (endY-startY)*e + arc;
+    proj.style.left = x+'px'; proj.style.top = y+'px';
+    proj.style.transform = `scale(${1+p*0.3}) rotate(${p*360}deg)`;
+    if(p<1){ requestAnimationFrame(step); }
+    else { proj.remove(); if(onHit) onHit(); }
+  }
+  requestAnimationFrame(step);
+}
+
+function runItutEnemyThenAdvance() {
+  // Enemy fires at player, then we go to defense step
+  const enemy = itutGs.enemyTeam[0];
+  const player = itutGs.playerTeam[0];
+  const atkOptions = SLOTS.map(s=>enemy.equip[s]?.atk).filter(a=>a&&a.cost<=enemy.sp);
+  const atkSkill = atkOptions.length ? atkOptions[0] : {name:'Basic Bite',type:'melee',cost:0,dmg:3,proj:'💥'};
+  document.getElementById('itut-phase-bar').textContent = `${enemy.name} → ${atkSkill.name} — YOUR TURN TO DEFEND!`;
+  itutGs.pendingAction = { attacker: enemy, atkSkill, target: player };
+  renderItutStep(5); // defense step
+}
+
+function buildItutDefenseButtons() {
+  const defender = itutGs.playerTeam[0];
+  const attacker = itutGs.enemyTeam[0];
+  const atkSkill = itutGs.pendingAction?.atkSkill || {name:'Bite',type:'melee',cost:0,dmg:4,proj:'💥'};
+  const sa = document.getElementById('itut-skillarea');
+  sa.innerHTML = `<div class="target-prompt">DEFEND ${defender.name}! PICK A DEFENSE SKILL</div>`;
+  const grid = document.createElement('div'); grid.className='skill-grid';
+  SLOTS.forEach(slot => {
+    const gear = defender.equip[slot]; if(!gear) return;
+    const def = gear.def;
+    const disabled = defender.sp < def.cost;
+    const btn = document.createElement('button'); btn.className='skill-btn'; btn.disabled=disabled;
+    btn.innerHTML=`<span class="sk-name">${def.name}</span><span class="sk-desc">${buildSkillDesc(def)}</span><span class="sk-cost">— ${def.cost} SP</span><span class="sk-type"><span class="skill-type-badge type-${def.type}">${def.type.toUpperCase()}</span></span>`;
+    btn.onclick = () => {
+      if(disabled) return;
+      itutResolveDefense(attacker, atkSkill, defender, def);
+    };
+    grid.appendChild(btn);
+  });
+  const take = document.createElement('button'); take.className='rest-btn';
+  take.textContent='TAKE THE HIT (no defense)';
+  take.onclick=()=>itutResolveDefense(attacker, atkSkill, defender, {name:'None',type:'melee',cost:0,block:0});
+  grid.appendChild(take);
+  sa.appendChild(grid);
+}
+
+function itutResolveDefense(attacker, atkSkill, defender, defSkill) {
+  attacker.sp = Math.max(0, attacker.sp - (atkSkill.cost||0));
+  defender.sp = Math.max(0, defender.sp - defSkill.cost);
+  let dmg = atkSkill.dmg || 3;
+  const block = defSkill.block || 0;
+  const dodged = defSkill.dodge;
+  let finalDmg = 0;
+  let msg = `<b style="color:${attacker.color}">${attacker.name}</b> used <b>${atkSkill.name}</b>. `;
+  if(dodged) {
+    msg += '<span class="log-miss">DODGED completely!</span>';
+    playBattleSFX('status');
+  } else {
+    finalDmg = Math.max(0, dmg - block);
+    defender.hp = Math.max(0, defender.hp - finalDmg);
+    if(block>0) msg += `<span class="log-miss">Blocked ${block}. </span>`;
+    if(finalDmg>0){ msg += `<span class="log-dmg">${finalDmg} DMG taken!</span>`; playBattleSFX('hit'); }
+    else msg += `<span class="log-heal">Fully blocked!</span>`;
+    if(defSkill.heal) {
+      defender.hp = Math.min(defender.maxHp, defender.hp + defSkill.heal);
+      msg += ` <span class="log-heal">Healed ${defSkill.heal} HP!</span>`;
+      playBattleSFX('heal');
+    }
+  }
+  itutLog(msg);
+  renderItutBattlefield();
+  renderItutTurnBar();
+  setTimeout(() => renderItutStep(6), 600);
+}
+
+// ══════════════════════════════════════════
+// SURVIVAL MODE
+// ══════════════════════════════════════════
+let survState = { wave:1, score:0, streak:0, selectedDino:null, equip:{} };
+
+function startSurvivalMode() {
+  survState = { wave:1, score:0, streak:0, selectedDino:null, equip:{} };
+  updateSurvivalHUD();
+  buildSurvivalPicker();
+  nav('survival');
+}
+
+function updateSurvivalHUD() {
+  document.getElementById('surv-wave-num').textContent = survState.wave;
+  document.getElementById('surv-score').textContent = survState.score;
+  document.getElementById('surv-streak').textContent = survState.streak;
+}
+
+function buildSurvivalPicker() {
+  const picker = document.getElementById('surv-dino-picker'); picker.innerHTML='';
+  DINOS.forEach(d => {
+    const card = document.createElement('div');
+    const isSelected = survState.selectedDino && survState.selectedDino.id===d.id;
+    card.className='dp-card'+(isSelected?' in-party':'');
+    card.innerHTML=`<div style="width:36px;height:36px;margin:0 auto 4px;">${DINO_SVGS[d.id]}</div>
+      <span class="dn" style="color:${d.color}">${d.name}</span>
+      <div class="drole">[${d.role}]</div>
+      <div class="dstats">HP:${d.hp} SPD:${d.spd}</div>`;
+    card.onclick = () => {
+      survState.selectedDino = d;
+      survState.equip = {};
+      buildSurvivalPicker();
+      buildSurvivalEquip();
+      document.getElementById('surv-equip-section').style.display = 'block';
+      updateSurvStartBtn();
+    };
+    picker.appendChild(card);
+  });
+}
+
+function buildSurvivalEquip() {
+  renderEquipGrid('surv-equip-grid', survState.equip, (slot,eq)=>{
+    survState.equip[slot]=eq;
+    buildSurvivalEquip();
+    updateSurvStartBtn();
+  });
+}
+
+function updateSurvStartBtn() {
+  document.getElementById('surv-start-btn').disabled =
+    !(survState.selectedDino && SLOTS.every(s=>survState.equip[s]));
+}
+
+function launchSurvivalBattle() {
+  // Build a survival battle: player's 1 dino vs wave enemies
+  // Wave scaling: 1-2 enemies early, then 3
+  const waveNum = survState.wave;
+  const enemyCount = Math.min(3, 1 + Math.floor((waveNum-1)/2));
+  const shuffled = [...DINOS].sort(()=>Math.random()-0.5).slice(0, enemyCount);
+
+  const playerFighter = makeFighter(survState.selectedDino, survState.equip, true, 0);
+  // Buff player slightly for survival — partial HP based on streak
+  const hpBonus = Math.min(8, survState.streak * 2);
+  playerFighter.maxHp += hpBonus; playerFighter.hp += hpBonus;
+
+  const enemyTeam = shuffled.map((d,i) => {
+    const equip = {};
+    // Scale enemy gear quality with wave
+    SLOTS.forEach(s => {
+      const opts = EQUIPMENT[s];
+      const pick = waveNum >= 3 ? opts[Math.min(opts.length-1, Math.floor(Math.random()*opts.length))] : opts[0];
+      equip[s] = pick;
+    });
+    const ef = makeFighter(d, equip, false, i);
+    // Wave scaling: increase enemy HP/SPD
+    const scale = 1 + (waveNum-1)*0.15;
+    ef.maxHp = Math.round(ef.maxHp * scale);
+    ef.hp = ef.maxHp;
+    ef.spd = Math.min(ef.spd + Math.floor(waveNum/3), ef.spd+3);
+    return ef;
+  });
+
+  gs = {
+    playerTeam: [playerFighter],
+    enemyTeam,
+    globalAtkBonus: 0,
+    activeSynergies: [],
+    round: 1, over: false,
+    turnOrder: [], turnIdx: 0,
+    actingFighter: null, pendingAction: null,
+    phase: 'build_order', busy: false,
+    isSurvival: true,
+    survWave: waveNum
+  };
+
+  nav('battle');
+  log(`🌋 SURVIVAL WAVE ${waveNum} — ${enemyCount} ENEMIES INCOMING!`, 'log-sys');
+  buildRoundOrder();
+}
+
+function nextSurvivalWave() {
+  survState.wave++;
+  updateSurvivalHUD();
+  buildSurvivalPicker();
+  buildSurvivalEquip();
+  updateSurvStartBtn();
+  document.getElementById('surv-overlay').classList.remove('show');
+  nav('survival');
+}
+
+function closeSurvivalOverlay() {
+  document.getElementById('surv-overlay').classList.remove('show');
+  survState = { wave:1, score:0, streak:0, selectedDino:null, equip:{} };
+}
+
+// ══════════════════════════════════════════
+// PATCHED TUTORIAL — delegate to interactive
+// ══════════════════════════════════════════
+function showTutorial() { startInteractiveTutorial(); }
+function closeTutorial() { skipTutorial(); }
 
 if(!localStorage.getItem('dinostrike_visited')){
-  window.addEventListener('DOMContentLoaded',()=>showTutorial());
-  if(document.readyState!=='loading') showTutorial();
+  window.addEventListener('DOMContentLoaded',()=>startInteractiveTutorial());
+  if(document.readyState!=='loading') startInteractiveTutorial();
 }
 </script>
 </body>
